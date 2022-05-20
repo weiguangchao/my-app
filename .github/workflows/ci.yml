@@ -1,0 +1,23 @@
+name: github action for build demo
+on: push
+jobs:
+  build-release:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+      - name: checkout branch
+        uses: actions/checkout@v3
+        with:
+          ref: master
+
+      - name: set node environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: install node_modules
+        uses: npm run install
+      - name: build project
+        uses: npm run build
